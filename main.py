@@ -1,16 +1,4 @@
-import random
-
-def random_personality():
-    personalities = ["Calm", "Lazy", "Energetic"]
-    choice = random.choice(personalities)
-    return choice
-
-def create_critter(c1):
-    print("What name do you want to give your critter?")
-    name = input()
-    name = name.capitalize()
-    c1.name_critter(name)
-
+import func
 
 class critter(object):
     """A virtual pet"""
@@ -24,8 +12,9 @@ class critter(object):
     def __init__(self):
         print("A new critter has been born!")
         self.name = ""
-        self.pers = random_personality()
+        self.pers = func.random_personality()
         critter.total+=1
+        self.__mood = "neutral"
 
     def __str__(self):
         info = "Critter info:\n"
@@ -36,12 +25,11 @@ class critter(object):
     def name_critter(self, name):
         self.name = name
 
+    def mood(self):
+        print("Right now I feel",self.__mood)
+
 c1 = critter()
-create_critter(c1)
+func.create_critter(c1)
 
-print(critter.total)
+print(c1)
 
-c2 = critter()
-create_critter(c2)
-
-print(critter.total)
