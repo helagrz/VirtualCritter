@@ -1,4 +1,5 @@
 import func
+import games
 
 class critter(object):
     """A virtual pet"""
@@ -32,4 +33,5 @@ c1 = critter()
 func.create_critter(c1)
 
 print(c1)
+
 
