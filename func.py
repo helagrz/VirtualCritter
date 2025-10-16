@@ -12,3 +12,9 @@ def random_personality():
     personalities = ["Calm", "Lazy", "Energetic"]
     choice = random.choice(personalities)
     return choice
+
+def hunger(hunger):
+    show = ""
+    show += hunger*"■"
+    show += (10-hunger)*"□"
+    return show

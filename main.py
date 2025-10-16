@@ -16,6 +16,7 @@ class critter(object):
         self.pers = func.random_personality()
         critter.total+=1
         self.__mood = "neutral"
+        self.hunger = 5
 
     def __str__(self):
         info = "Critter info:\n"
@@ -27,11 +28,18 @@ class critter(object):
         self.name = name
 
     def mood(self):
-        print("Right now I feel",self.__mood)
+        print(self.name"feels",self.__mood)
+
+    def feed(self):
+        if(self.hunger >= 10):
+            print(self.name,"is full")
+            print(func.hunger(self.hunger))
+            self.hunger = 10
+        else:
+            self.hunger += 2
+            print("You gave",self.name,"food")
+            print("Level of hunger:")
+            print(func.hunger(self.hunger))
 
 c1 = critter()
 func.create_critter(c1)
-
-print(c1)
-
-
