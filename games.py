@@ -50,11 +50,11 @@ def tictactoe(name):
     """)
     tab = [" "," "," "," "," "," "," "," "," "]
     print("Choose a symbol (O or X)")
-    s = input()
+    s = input("▷ ")
     s = s.upper()
     while(s!='O' and s!='X'):
         print("Choose a symbol (O or X)")
-        s = input()
+        s = input("▷ ")
         s = s.upper()
 
     if(s=="X"):
@@ -80,13 +80,13 @@ def tictactoe(name):
     space = True
 
     while(win == False and space == True):
-        x = int(input())
+        x = int(input("▷ "))
         while(x>9 and x<1):
             print("Enter numbers 1-9")
-            x = int(input())
+            x = int(input("▷ "))
         while(tab[x-1]!=" "):
             print("This space is taken")
-            x = int(input())
+            x = int(input("▷ "))
         tab[x-1]=s
         table(tab)
 
@@ -232,12 +232,12 @@ def hangman(name):
     print("Enter various letters to guess "+str(name)+"'s word or sentence")
     print("You can also enter whole words or phrases to make a guess")
     print("What difficulty? (Easy - singular world, or hard - sentences)")
-    dif = input()
+    dif = input("▷ ")
     dif = dif.lower()
 
     while(dif!="easy" and  dif!="hard"):
         print("Write 'easy' of 'hard'")
-        dif = input()
+        dif = input("▷ ")
         dif = dif.lower()
 
     if(dif=="easy"):
@@ -259,7 +259,7 @@ def hangman(name):
     print(answer)
 
     while(answer!=word and hangman_index<10):
-        letter = input()
+        letter = input("▷ ")
         letter = letter.upper()
         if(len(letter)>1):
             if(letter==word):

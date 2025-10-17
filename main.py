@@ -28,22 +28,6 @@ class critter(object):
         print(info)
         return info
 
-    def selection(self):
-        print("What do you want to do?")
-        print("""
-            1 - INFO
-            2 - CHECK
-            3 - FEED
-            4 - PLAY
-            5 - MORE
-              """)
-        x = int(input())
-        match x:
-            case 1:
-                print("You selected: INFO")
-                self.info_c()
-
-
     def name_critter(self, name):
         self.name = name
 
@@ -63,9 +47,9 @@ class critter(object):
 
 c1 = critter()
 func.create_critter(c1)
-
 continue_pl = True
 print(c1)
 
-c1.selection()
+while(continue_pl):
+    continue_pl = func.selection(c1)
 
