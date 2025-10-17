@@ -2,6 +2,7 @@
 
 import random
 import games
+current = 0
 
 def welcome():
     print("Welcome to the virtual critter program!")
@@ -9,11 +10,11 @@ def welcome():
     print("Keep good care of them by feeding them playing with them and more!")
 
 
-def create_critter(c1):
+def create_critter(c):
     print("What name do you want to give your critter?")
     name = input("▷ ")
     name = name.capitalize()
-    c1.name_critter(name)
+    c.name_critter(name)
 
 def random_personality():
     personalities = ["Calm", "Lazy", "Energetic"]
@@ -26,7 +27,10 @@ def hunger(hunger):
     show += (10-hunger)*"□"
     return show
 
-def selection(ref):
+def valid_name(s):
+    return True
+
+def selection(ref, c, o_ref):
         print("What do you want to do?")
         print("""
         1 - INFO
@@ -46,6 +50,8 @@ def selection(ref):
             ref.feed()
         elif(x==4):
             play(ref, ref.name)
+        elif(x==5):
+            settings(ref, c, o_ref)
         elif(x==6):
             print("See you later!")
             return False
@@ -64,4 +70,40 @@ What game do you want to play?
     elif(x==2):
         games.tictactoe(name)
     elif(x==3):
+        return
+    
+def settings(ref, c, o_ref):
+    print("""
+What do you want to do?
+    1 - CHANGE NAME
+        
+
+    3 - SAVE CRITTER
+    4 - LOAD CRITTER
+    5 - CREATE NEW CRITTER
+    6 - 
+    7 - BACK
+""")
+    x = int(input("▷ "))
+    if(x==1):
+        print("What new name do you want to give",ref.name)
+        x = input("▷ ")
+        while(not(valid_name(x))):
+            print("Name not valid")
+            print("Name has to include at least one letter")
+            x = input("▷ ")
+        x = x.capitalize()
+        print(ref.name,"is now", x)
+        ref.name_critter(x)
+        return
+    elif(x==5):
+        print("Are you sure you want to add another critter? (To proceed enter \'yes\')")
+        answer = input("▷ ")
+        answer = answer.lower()
+        if(answer=='yes'):
+            c.append(o_ref)
+            create_critter(c[o_ref.total-2])
+            print(c[o_ref.total-2])
+            current = o_ref.total-2
+    elif(x==7):
         return

@@ -45,11 +45,14 @@ class critter(object):
             print("Level of hunger:")
             print(func.hunger(self.hunger))
 
-c1 = critter()
-func.create_critter(c1)
+#c1 = critter()
+#func.create_critter(c1)
 continue_pl = True
-print(c1)
+#print(c1)
+
+c = []
+c.append(critter())
+func.create_critter(c[0])
 
 while(continue_pl):
-    continue_pl = func.selection(c1)
-
+    continue_pl = func.selection(c[func.current], c, critter())
