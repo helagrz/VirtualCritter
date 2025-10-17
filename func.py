@@ -2,7 +2,15 @@
 
 import random
 import games
+import os
 current = 0
+cwd = os.getcwd()
+
+def load():
+    with open('savefile.txt', 'r') as f:
+        for x in f:
+            print(x)
+    f.close()
 
 def welcome():
     print("Welcome to the virtual critter program!")
@@ -95,6 +103,9 @@ What do you want to do?
         x = x.capitalize()
         print(ref.name,"is now", x)
         ref.name_critter(x)
+        return
+    elif(x==4):
+        load()
         return
     elif(x==5):
         print("Are you sure you want to add another critter? (To proceed enter \'yes\')")
