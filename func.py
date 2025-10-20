@@ -103,18 +103,32 @@ What do you want to do?
         x = x.capitalize()
         print(ref.name,"is now", x)
         ref.name_critter(x)
-        return
     elif(x==4):
         load()
-        return
     elif(x==5):
         print("Are you sure you want to add another critter? (To proceed enter \'yes\')")
         answer = input("▷ ")
         answer = answer.lower()
         if(answer=='yes'):
-            c.append(o_ref)
-            create_critter(c[o_ref.total-2])
-            print(c[o_ref.total-2])
-            current = o_ref.total-2
+            c.append(o_ref())
+            create_critter(c[o_ref.total-1])
+            print(len(c))
+            for i in c:
+                print(i)
+            #print(c[o_ref.total-1])
+            current = o_ref.total-1
     elif(x==7):
-        return
+        print("Are you sure? (To proceed enter \'yes\')")
+        answer = input("▷ ")
+        answer = answer.lower()
+        if(answer=='yes'):
+            for i in c:
+                print(i)
+            c.remove(ref)
+            print("Loop")
+            o_ref.total -= 1
+            for i in c:
+                print(i)
+            current = len(c)-1
+            print(current)
+    return
