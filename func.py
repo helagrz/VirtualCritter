@@ -3,7 +3,6 @@
 import random
 import games
 import os
-current = 0
 cwd = os.getcwd()
 
 def load():
@@ -89,7 +88,7 @@ What do you want to do?
     3 - SAVE CRITTER
     4 - LOAD CRITTER
     5 - CREATE NEW CRITTER
-    6 - 
+    6 - REMOVE THIS CRITTER
     7 - BACK
 """)
     x = int(input("▷ "))
@@ -112,23 +111,19 @@ What do you want to do?
         if(answer=='yes'):
             c.append(o_ref())
             create_critter(c[o_ref.total-1])
-            print(len(c))
-            for i in c:
-                print(i)
-            #print(c[o_ref.total-1])
-            current = o_ref.total-1
-    elif(x==7):
+            o_ref.current = o_ref.total-1
+            print(c[o_ref.current])
+    elif(x==6):
         print("Are you sure? (To proceed enter \'yes\')")
         answer = input("▷ ")
         answer = answer.lower()
         if(answer=='yes'):
             for i in c:
                 print(i)
-            c.remove(ref)
+            c.pop(len(c)-1)
             print("Loop")
             o_ref.total -= 1
             for i in c:
                 print(i)
-            current = len(c)-1
-            print(current)
+            o_ref.current = len(c)-1
     return

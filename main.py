@@ -4,6 +4,7 @@ import games
 class critter(object):
     """A virtual pet"""
     total = 0
+    current = 0
 
     @staticmethod
     def status():
@@ -57,7 +58,7 @@ c.append(critter())
 func.create_critter(c[0])
 
 while(continue_pl):
-    continue_pl = func.selection(c[func.current], c, critter)
+    continue_pl = func.selection(c[critter.current], c, critter)
     critter.status()
     for i in c:
         print(i)
