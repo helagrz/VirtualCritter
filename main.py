@@ -59,6 +59,5 @@ func.create_critter(c[0])
 
 while(continue_pl):
     continue_pl = func.selection(c[critter.current], c, critter)
-    critter.status()
-    for i in c:
-        print(i)
+    print(critter.current)
+    

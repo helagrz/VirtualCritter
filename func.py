@@ -3,13 +3,28 @@
 import random
 import games
 import os
-cwd = os.getcwd()
 
-def load():
-    with open('savefile.txt', 'r') as f:
-        for x in f:
-            print(x)
+SaveFile = open('./savefile.txt', 'r')
+
+def load_file(c, f, index):
+    c[index].name_critter(f.readline())
+    c[index].pers = f.readline()
+    c[index].hunger = int(f.readline())
+
+def load(c, o_ref):
+    cwd = os.getcwd()
+    cwd = os.path.join(cwd,'VirtualCritter')
+    c.clear()
+    c.append(o_ref)
+    o_ref.total = 0
+    cwd_s = os.path.join(cwd,'savefile.txt')
+    with open(cwd_s, 'r') as f:
+        t = int(f.readline())
+        for i in range(t):
+            c.append(o_ref)
+            load_file(c, f, i)
     f.close()
+
 
 def welcome():
     print("Welcome to the virtual critter program!")
@@ -36,6 +51,26 @@ def hunger(hunger):
 
 def valid_name(s):
     return True
+
+def critter_selection(ref, c, o_ref):
+    print(ref.status())
+    j = 1
+    symbol = ""
+    for i in c:
+        if((ref.current+1)==j):
+            symbol = '▶ '
+        else:
+            symbol = str(j)
+            symbol += " - "
+        print("            "+symbol+i.name.upper())
+        j+=1
+    x = int(input("▷ "))
+    for i in range(len(c)):
+        if(i == x and x!=ref.current+1):
+            print("You choose",c[i-1].name)
+            o_ref.current = x-1
+
+
 
 def selection(ref, c, o_ref):
         print("What do you want to do?")
@@ -103,7 +138,7 @@ What do you want to do?
         print(ref.name,"is now", x)
         ref.name_critter(x)
     elif(x==4):
-        load()
+        load(c, o_ref)
     elif(x==5):
         print("Are you sure you want to add another critter? (To proceed enter \'yes\')")
         answer = input("▷ ")
@@ -120,10 +155,9 @@ What do you want to do?
         if(answer=='yes'):
             for i in c:
                 print(i)
-            c.pop(len(c)-1)
-            print("Loop")
+            c.pop(o_ref.current)
             o_ref.total -= 1
-            for i in c:
-                print(i)
             o_ref.current = len(c)-1
+    elif(x==7):
+        critter_selection(ref, c, o_ref)
     return

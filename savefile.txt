@@ -1,2 +1,10 @@
+3
 abc
-def
+lazy
+4
+efg
+energic
+7
+hij
+nice
+1
