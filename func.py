@@ -1,16 +1,33 @@
 #Module with functions for virtual critter program
-
 import random
 import games
 import os
-current = 0
-cwd = os.getcwd()
 
-def load():
-    with open('savefile.txt', 'r') as f:
-        for x in f:
-            print(x)
+def load_file(ref, file, index):
+    index *= 3
+    ref.name_critter(file[index])
+    ref.pers = file[index+1]
+    ref.hunger = int(file[index+2])
+
+def load(c, o_ref):
+    cwd = os.getcwd()
+    cwd = os.path.join(cwd,'VirtualCritter')
+    c.clear()
+    o_ref.total = 0
+    file = []
+    cwd_s = os.path.join(cwd,'savefile.txt')
+    with open(cwd_s, 'r') as f:
+        t = int(f.readline().rstrip('\n'))
+        for i in range(t*3):
+            file.append(f.readline().rstrip('\n'))
+
+        for i in range(t):
+            c.append(o_ref())
+            load_file(c[i], file, i)
+    o_ref.status()
     f.close()
+    return c
+
 
 def welcome():
     print("Welcome to the virtual critter program!")
@@ -37,6 +54,26 @@ def hunger(hunger):
 
 def valid_name(s):
     return True
+
+def critter_selection(ref, c, o_ref):
+    print(ref.status())
+    j = 1
+    symbol = ""
+    for i in c:
+        if((ref.current+1)==j):
+            symbol = "▶ "
+        else:
+            symbol = str(j)
+            symbol += " - "
+        print("            "+symbol+i.name.upper())
+        j+=1
+    x = int(input("▷ "))
+    for i in range(len(c)+1):
+        if(i == x and x!=ref.current+1):
+            print("You choose",c[i-1].name)
+            o_ref.current = x-1
+
+
 
 def selection(ref, c, o_ref):
         print("What do you want to do?")
@@ -89,7 +126,7 @@ What do you want to do?
     3 - SAVE CRITTER
     4 - LOAD CRITTER
     5 - CREATE NEW CRITTER
-    6 - 
+    6 - REMOVE THIS CRITTER
     7 - BACK
 """)
     x = int(input("▷ "))
@@ -103,18 +140,27 @@ What do you want to do?
         x = x.capitalize()
         print(ref.name,"is now", x)
         ref.name_critter(x)
-        return
     elif(x==4):
-        load()
-        return
+        c = load(c, o_ref)
     elif(x==5):
         print("Are you sure you want to add another critter? (To proceed enter \'yes\')")
         answer = input("▷ ")
         answer = answer.lower()
         if(answer=='yes'):
-            c.append(o_ref)
-            create_critter(c[o_ref.total-2])
-            print(c[o_ref.total-2])
-            current = o_ref.total-2
+            c.append(o_ref())
+            create_critter(c[o_ref.total-1])
+            o_ref.current = o_ref.total-1
+            print(c[o_ref.current])
+    elif(x==6):
+        print("Are you sure? (To proceed enter \'yes\')")
+        answer = input("▷ ")
+        answer = answer.lower()
+        if(answer=='yes'):
+            for i in c:
+                print(i)
+            c.pop(o_ref.current)
+            o_ref.total -= 1
+            o_ref.current = len(c)-1
     elif(x==7):
-        return
+        critter_selection(ref, c, o_ref)
+    return

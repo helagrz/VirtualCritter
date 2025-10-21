@@ -4,6 +4,7 @@ import games
 class critter(object):
     """A virtual pet"""
     total = 0
+    current = 0
 
     @staticmethod
     def status():
@@ -19,14 +20,16 @@ class critter(object):
         self.hunger = 5
 
     def __str__(self):
-        return self.info_c()
+        info = "Critter info:\n"
+        info += "   Name: " + self.name + "\n"
+        info += "   Personality: " + self.pers + "\n"
+        return info
         
     def info_c(self):
         info = "Critter info:\n"
         info += "   Name: " + self.name + "\n"
         info += "   Personality: " + self.pers + "\n"
         print(info)
-        return info
 
     def name_critter(self, name):
         self.name = name
@@ -55,4 +58,6 @@ c.append(critter())
 func.create_critter(c[0])
 
 while(continue_pl):
-    continue_pl = func.selection(c[func.current], c, critter())
+    continue_pl = func.selection(c[critter.current], c, critter)
+    print(critter.current)
+    

@@ -1,2 +1,10 @@
-abc
-def
+3
+Bebe
+lazy
+4
+Paul
+energic
+9
+Christopher
+calm
+1
