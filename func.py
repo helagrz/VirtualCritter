@@ -11,7 +11,7 @@ def load_file(ref, file, index):
 
 def load(c, o_ref):
     cwd = os.getcwd()
-    cwd = os.path.join(cwd,'VirtualCritter')
+    cwd = os.path.join(cwd,'GitHub/VirtualCritter')
     c.clear()
     o_ref.total = 0
     file = []
@@ -28,6 +28,20 @@ def load(c, o_ref):
     f.close()
     return c
 
+def save_file(ref, f):
+    f.write(ref.name+'\n')
+    f.write(ref.pers+'\n')
+    f.write(str(ref.hunger)+'\n')
+
+def save(c, o_ref):
+    cwd = os.getcwd()
+    cwd = os.path.join(cwd,'GitHub/VirtualCritter')
+    cwd_s = os.path.join(cwd,'savefile.txt')
+    with open(cwd_s, 'w') as f:
+        f.write(str(o_ref.total)+'\n')
+        for i in range(o_ref.total):
+            save_file(c[i], f)
+    f.close()
 
 def welcome():
     print("Welcome to the virtual critter program!")
@@ -140,6 +154,8 @@ What do you want to do?
         x = x.capitalize()
         print(ref.name,"is now", x)
         ref.name_critter(x)
+    elif(x==3):
+        c = save(c, o_ref)
     elif(x==4):
         c = load(c, o_ref)
     elif(x==5):
