@@ -48,14 +48,16 @@ class critter(object):
             print("Level of hunger:")
             print(func.hunger(self.hunger))
 
-#c1 = critter()
-#func.create_critter(c1)
 continue_pl = True
-#print(c1)
-
 c = []
-c.append(critter())
-func.create_critter(c[0])
+
+print('Do you have a save file you want to load? (to proceed enter \'yes\')')
+x = input("▷ ")
+if(x == 'yes'):
+    func.load(c, critter)
+else:
+    c.append(critter())
+    func.create_critter(c[0])
 
 while(continue_pl):
     continue_pl = func.selection(c[critter.current], c, critter)

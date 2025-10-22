@@ -81,6 +81,7 @@ def critter_selection(ref, c, o_ref):
             symbol += " - "
         print("            "+symbol+i.name.upper())
         j+=1
+    print("\n            "+str(o_ref.total+1)+" - BACK")
     x = int(input("▷ "))
     for i in range(len(c)+1):
         if(i == x and x!=ref.current+1):
@@ -92,12 +93,12 @@ def critter_selection(ref, c, o_ref):
 def selection(ref, c, o_ref):
         print("What do you want to do?")
         print("""
-        1 - INFO
-        2 - CHECK
-        3 - FEED
-        4 - PLAY
-        5 - MORE
-        6 - EXIT PROGRAM
+    1 - INFO
+    2 - CHECK
+    3 - FEED
+    4 - PLAY
+    5 - MORE
+    6 - EXIT PROGRAM
               """)
         x = int(input("▷ "))
         if(x==1):
@@ -134,9 +135,8 @@ What game do you want to play?
 def settings(ref, c, o_ref):
     print("""
 What do you want to do?
-    1 - CHANGE NAME
-        
-
+    1 - SELECT CRITTER
+    2 - CHANGE NAME
     3 - SAVE CRITTER
     4 - LOAD CRITTER
     5 - CREATE NEW CRITTER
@@ -144,7 +144,7 @@ What do you want to do?
     7 - BACK
 """)
     x = int(input("▷ "))
-    if(x==1):
+    if(x==2):
         print("What new name do you want to give",ref.name)
         x = input("▷ ")
         while(not(valid_name(x))):
@@ -177,6 +177,6 @@ What do you want to do?
             c.pop(o_ref.current)
             o_ref.total -= 1
             o_ref.current = len(c)-1
-    elif(x==7):
+    elif(x==1):
         critter_selection(ref, c, o_ref)
     return
