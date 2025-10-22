@@ -110,16 +110,20 @@ def tictactoe(name):
             if(space==True):
                 print("Your turn")
 
+    exp = 0
     if(space==False and win==False) :
         print("No space left, nobody wins")
     else:
         print(winner,"wins!")
         if(winner ==s):
             print("Congratulations!")
+            exp = 30
         else:
             print("You lose,",name,"wins!")
-
-    return 
+            exp = 10
+    print("You get",exp,"exp")
+    print("")
+    return exp
     
 def hangman(name):
     hangman = ("""
@@ -249,6 +253,7 @@ def hangman(name):
     wrong = []
     answer = ""
     hangman_index = 0
+    exp = 0
 
     answer += '_'*len(word)
     for i in range(len(word)):
@@ -264,6 +269,7 @@ def hangman(name):
         if(len(letter)>1):
             if(letter==word):
                 print("You guesses it!")
+                exp = 50
                 answer = word
             else:
                 print("Wrong guess, it's not",letter)
@@ -286,10 +292,17 @@ def hangman(name):
 
     if(hangman_index<10):
         print("\nCongratulations! You win!")
+        if(exp == 0):
+            exp = 20
     else:
         print("\nYou lose")
-        if(dif =="easy"):
-            print("The word was",word)
-        else:
-            print("The sentence was",word)
+        exp = 10
+
+    if(dif =="easy"):
+        print("The word was",word)
+    else:
+        print("The sentence was",word)
+        exp += 20
+    print("You get",exp,"exp")
     print("")
+    return exp

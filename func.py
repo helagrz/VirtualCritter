@@ -2,23 +2,25 @@
 import random
 import games
 import os
+import info_file
 
 def load_file(ref, file, index):
-    index *= 3
+    index *= 4
     ref.name_critter(file[index])
     ref.pers = file[index+1]
     ref.hunger = int(file[index+2])
+    ref.level = int(file[index+3])
 
-def load(c, o_ref):
+def load(c, o_ref, f_name):
     cwd = os.getcwd()
     cwd = os.path.join(cwd,'GitHub/VirtualCritter')
     c.clear()
     o_ref.total = 0
     file = []
-    cwd_s = os.path.join(cwd,'savefile.txt')
+    cwd_s = os.path.join(cwd,f_name)
     with open(cwd_s, 'r') as f:
         t = int(f.readline().rstrip('\n'))
-        for i in range(t*3):
+        for i in range(t*4):
             file.append(f.readline().rstrip('\n'))
 
         for i in range(t):
@@ -32,11 +34,12 @@ def save_file(ref, f):
     f.write(ref.name+'\n')
     f.write(ref.pers+'\n')
     f.write(str(ref.hunger)+'\n')
+    f.write(str(ref.level)+'\n')
 
-def save(c, o_ref):
+def save(c, o_ref, f_name):
     cwd = os.getcwd()
     cwd = os.path.join(cwd,'GitHub/VirtualCritter')
-    cwd_s = os.path.join(cwd,'savefile.txt')
+    cwd_s = os.path.join(cwd,f_name)
     with open(cwd_s, 'w') as f:
         f.write(str(o_ref.total)+'\n')
         for i in range(o_ref.total):
@@ -64,6 +67,13 @@ def hunger(hunger):
     show = ""
     show += hunger*"■"
     show += (10-hunger)*"□"
+    return show
+
+def level(level):
+    show = "LV "
+    show += str(level//10) + " "
+    show += (level%10)*"■"
+    show += (10-level%10)*"□"
     return show
 
 def valid_name(s):
@@ -104,12 +114,18 @@ def selection(ref, c, o_ref):
         if(x==1):
             ref.info_c()
         elif(x==2):
-            ref.mood()
+            print(ref.name,'feels',ref.mood_str())
             print("Hunger:",hunger(ref.hunger))
+            print(level(ref.level))
         elif(x==3):
             ref.feed()
         elif(x==4):
-            play(ref, ref.name)
+            if(ref.hunger >2):
+                play(ref, ref.name)
+            elif(ref.mood<3):
+                print(ref.name,'feels',ref.mood_str(),'and is not in the mood to play')
+            else:
+                print(ref.name,"is too hungry to play")
         elif(x==5):
             settings(ref, c, o_ref)
         elif(x==6):
@@ -126,11 +142,14 @@ What game do you want to play?
     """)
     x = int(input("▷ "))
     if(x==1):
-        games.hangman(name)
+        ref.level += int(games.hangman(name)//10)
+        ref.hunger -= 1
     elif(x==2):
-        games.tictactoe(name)
-    elif(x==3):
-        return
+        ref.level += int(games.tictactoe(name)//10)
+        ref.hunger -= 1
+    if(ref.hunger<0):
+        ref.hunger = 0
+    return
     
 def settings(ref, c, o_ref):
     print("""
@@ -141,7 +160,9 @@ What do you want to do?
     4 - LOAD CRITTER
     5 - CREATE NEW CRITTER
     6 - REMOVE THIS CRITTER
-    7 - BACK
+    7 - RESET
+    8 - HELP
+    9 - BACK
 """)
     x = int(input("▷ "))
     if(x==2):
@@ -155,9 +176,9 @@ What do you want to do?
         print(ref.name,"is now", x)
         ref.name_critter(x)
     elif(x==3):
-        c = save(c, o_ref)
+        c = save(c, o_ref, 'savefile.txt')
     elif(x==4):
-        c = load(c, o_ref)
+        c = load(c, o_ref, 'savefile.txt')
     elif(x==5):
         print("Are you sure you want to add another critter? (To proceed enter \'yes\')")
         answer = input("▷ ")
@@ -179,4 +200,26 @@ What do you want to do?
             o_ref.current = len(c)-1
     elif(x==1):
         critter_selection(ref, c, o_ref)
+    elif(x==7):
+        c.clear()
+        c.append(o_ref())
+        o_ref.total = 0
+        create_critter(c[0])
+    elif(x==8):
+        info()
     return
+
+def info():
+    x = 1
+    while(x<4 and x>0):
+        print("""
+What do you want to know?
+    1 - CRITTERS
+    2 - SAVING
+    3 - LOADING
+    4 - BACK
+""")
+        x = int(input("▷ "))
+        info_file.p_info(x)
+
+    
